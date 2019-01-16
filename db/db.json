@@ -22,7 +22,7 @@
     },
     {
       "titulo": "Aprender Vue Router",
-      "concluido": false,
+      "concluido": true,
       "id": 5
     }
   ]
