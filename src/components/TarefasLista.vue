@@ -67,11 +67,22 @@ export default {
                 .then((response) => {
                     console.log('POST /tarefas', response)
                     this.tarefas.push(response.data)
-                    this.exibirFormulario = false
+                    this.resetar()
                 })
         },
         editarTarefa(tarefa) {
             console.log('Editar: ', tarefa)
+            axios.put(`${config.apiURL}/tarefas/${tarefa.id}`, tarefa)
+                .then(response => {
+                    console.log(`PUT /tarefas/${tarefa.id}`, response)
+                    const indice = this.tarefas.findIndex(t => t.id === tarefa.id)
+                    this.tarefas.splice(indice, 1, tarefa)
+                    this.resetar()
+                })
+        },
+        resetar() {
+            this.tarefaSelecionada = undefined
+            this.exibirFormulario = false
         },
         selecionarTarefaParaEdicao(tarefa) {
             this.tarefaSelecionada = tarefa
