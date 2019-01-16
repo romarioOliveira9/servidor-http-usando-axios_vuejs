@@ -17,7 +17,7 @@
 
         <ul class="list-group" v-if="tarefas.length > 0">
             <TarefasListaIten
-                v-for="tarefa in tarefas"
+                v-for="tarefa in tarefasOrdenadas"
                 :key="tarefa.id"
                 :tarefa="tarefa"
                 @editar="selecionarTarefaParaEdicao"
@@ -54,6 +54,20 @@ export default {
             tarefas: [],
             exibirFormulario: false,
             tarefaSelecionada: undefined
+        }
+    },
+    computed: {
+        tarefasOrdenadas() {
+            return this.tarefas.sort((t1, t2) => {
+                if (t1.concluido === t2.concluido) {
+                    return t1.titulo < t2.titulo
+                        ? -1
+                        : t1.titulo > t2.titulo
+                            ? 1
+                            : 0
+                }
+                return t1.concluido - t2.concluido
+            })
         }
     },
     created() {
