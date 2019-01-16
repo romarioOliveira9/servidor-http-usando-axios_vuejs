@@ -79,12 +79,28 @@ export default {
     },
     methods: {
         criarTarefa(tarefa) {
-            axios.post(`${config.apiURL}/tarefas`, tarefa)
+            /*axios.post(`${config.apiURL}/tarefas`, tarefa)
                 .then((response) => {
                     console.log('POST /tarefas', response)
                     this.tarefas.push(response.data)
                     this.resetar()
-                })
+                })*/
+
+            /*axios.get('', {})
+            axios.post('', {}, {})
+            axios.put('', {}, {})
+            axios.delete('', {})*/
+
+            axios.request({
+                method: 'post',
+                baseURL: config.apiURL,
+                url: `/tarefas`,
+                data: tarefa
+            }).then((response) => {
+                console.log('POST /tarefas', response)
+                this.tarefas.push(response.data)
+                this.resetar()
+            })
         },
         deletarTarefa(tarefa) {
             const confirmar = window.confirm(`Deseja deletar a tarefa "${tarefa.titulo}"?`)
