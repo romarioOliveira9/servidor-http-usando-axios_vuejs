@@ -8,7 +8,7 @@
             <div class="col-sm-2">
                 <button 
                     class="btn btn-primary float-right"
-                    @click="exibirFormulario = !exibirFormulario">
+                    @click="exibirFormularioCriarTarefa">
                         <i class="fa fa-plus mr-2"></i>
                         <span>Criar</span>
                 </button>
@@ -21,7 +21,8 @@
                 :key="tarefa.id"
                 :tarefa="tarefa"
                 @editar="selecionarTarefaParaEdicao"
-                @deletar="deletarTarefa" />
+                @deletar="deletarTarefa"
+                @concluir="editarTarefa" />
         </ul>
 
         <p v-else>Nenhuma tarefa criada.</p>
@@ -71,16 +72,6 @@ export default {
                     this.resetar()
                 })
         },
-        editarTarefa(tarefa) {
-            console.log('Editar: ', tarefa)
-            axios.put(`${config.apiURL}/tarefas/${tarefa.id}`, tarefa)
-                .then(response => {
-                    console.log(`PUT /tarefas/${tarefa.id}`, response)
-                    const indice = this.tarefas.findIndex(t => t.id === tarefa.id)
-                    this.tarefas.splice(indice, 1, tarefa)
-                    this.resetar()
-                })
-        },
         deletarTarefa(tarefa) {
             const confirmar = window.confirm(`Deseja deletar a tarefa "${tarefa.titulo}"?`)
             if (confirmar) {
@@ -91,6 +82,23 @@ export default {
                         this.tarefas.splice(indice, 1)
                     })
             }
+        },
+        editarTarefa(tarefa) {
+            console.log('Editar: ', tarefa)
+            axios.put(`${config.apiURL}/tarefas/${tarefa.id}`, tarefa)
+                .then(response => {
+                    console.log(`PUT /tarefas/${tarefa.id}`, response)
+                    const indice = this.tarefas.findIndex(t => t.id === tarefa.id)
+                    this.tarefas.splice(indice, 1, tarefa)
+                    this.resetar()
+                })
+        },
+        exibirFormularioCriarTarefa(event) {
+            if (this.tarefaSelecionada) {
+                this.tarefaSelecionada = undefined
+                return
+            }
+            this.exibirFormulario = !this.exibirFormulario
         },
         resetar() {
             this.tarefaSelecionada = undefined
