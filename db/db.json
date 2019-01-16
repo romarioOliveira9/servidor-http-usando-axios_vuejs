@@ -19,11 +19,6 @@
       "titulo": "Aprender Vuex",
       "concluido": false,
       "id": 4
-    },
-    {
-      "titulo": "Aprender Vuetify",
-      "concluido": false,
-      "id": 5
     }
   ]
 }
