@@ -3,7 +3,8 @@
     {
       "id": 1,
       "titulo": "Aprender JavaScript",
-      "concluido": false
+      "concluido": true,
+      "curso": "Vue JS"
     },
     {
       "id": 2,
