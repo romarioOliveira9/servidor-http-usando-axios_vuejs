@@ -9,7 +9,8 @@
     {
       "id": 2,
       "titulo": "Aprender Vue",
-      "concluido": true
+      "concluido": false,
+      "curso": "Vue JS"
     },
     {
       "id": 3,
