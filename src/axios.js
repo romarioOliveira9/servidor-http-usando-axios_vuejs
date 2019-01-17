@@ -31,4 +31,15 @@ instance.interceptors.request.use(config => {
     return Promise.reject(error)
 })
 
+instance.interceptors.response.use(response => {
+    console.log('Interceptando resposta...', response)
+    if (Array.isArray(response.data)) {
+        response.data = response.data.slice(1, 3)
+    }
+    return response
+}, error => {
+    console.log('Erro capturado no interceptador de respostas: ', error)
+    return Promise.reject(error)
+})
+
 export default instance
