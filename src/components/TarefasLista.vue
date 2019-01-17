@@ -122,15 +122,28 @@ export default {
                 this.resetar()
             })
         },
-        deletarTarefa(tarefa) {
+        async deletarTarefa(tarefa) {
             const confirmar = window.confirm(`Deseja deletar a tarefa "${tarefa.titulo}"?`)
             if (confirmar) {
-                axios.delete(`/tarefas/${tarefa.id}`)
+
+                /*axios.delete(`/tarefas/${tarefa.id}`)
                     .then(response => {
                         console.log(`DELETE /tarefas/${tarefa.id}`, response)
                         const indice = this.tarefas.findIndex(t => t.id === tarefa.id)
                         this.tarefas.splice(indice, 1)
-                    })
+                    })*/
+
+                try {
+                    const response = await axios.delete(`/tarefas/${tarefa.id}`)
+                    console.log(`DELETE /tarefas/${tarefa.id}`, response)
+                    const indice = this.tarefas.findIndex(t => t.id === tarefa.id)
+                    this.tarefas.splice(indice, 1)
+                } catch(error) {
+                    console.log('Erro ao deletar Tarefa: ', error)
+                } finally {
+                    console.log('Sempre executado!')
+                }
+
             }
         },
         editarTarefa(tarefa) {

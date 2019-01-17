@@ -7,12 +7,6 @@
       "curso": "Vue JS"
     },
     {
-      "id": 2,
-      "titulo": "Aprender Vue",
-      "concluido": false,
-      "curso": "Vue JS"
-    },
-    {
       "id": 3,
       "titulo": "Aprender Axiossss",
       "concluido": false

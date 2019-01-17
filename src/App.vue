@@ -28,7 +28,7 @@ export default {
     components: {
         TarefasLista
     },
-    created() {
+    async created() {
       /*axios.all([
         axios.get(`${config.apiURL}/tarefas/1`),
         axios.get(`${config.apiURL}/tarefas/3`)
@@ -38,7 +38,7 @@ export default {
         console.log('Tarefa 3: ', tarefa3)
       }))*/
 
-      axios.all([
+      /*axios.all([
         axios.get(`${config.apiURL}/tarefas/1`),
         axios.get(`${config.apiURL}/tarefas/3`)
       ]).then(response => {
@@ -46,7 +46,15 @@ export default {
         console.log('Requisições simultâneas:')
         console.log('Tarefa 1: ', tarefa1)
         console.log('Tarefa 3: ', tarefa3)
-      })
+      })*/
+
+      const tarefa1 = await axios.get(`${config.apiURL}/tarefas/1`)
+      const tarefa3 = await axios.get(`${config.apiURL}/tarefas/3`)
+
+      console.log('Requisições simultâneas:')
+      console.log('Tarefa 1: ', tarefa1)
+      console.log('Tarefa 3: ', tarefa3)
+
     }
 }
 </script>
