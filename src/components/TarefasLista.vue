@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <ul class="list-group" v-if="tarefas.length > 0">
+        <ul class="list-group" v-if="tarefasOrdenadas.length > 0">
             <TarefasListaIten
                 v-for="tarefa in tarefasOrdenadas"
                 :key="tarefa.id"
@@ -25,7 +25,9 @@
                 @concluir="editarTarefa" />
         </ul>
 
-        <p v-else>Nenhuma tarefa criada.</p>
+        <p v-else-if="!mensagemErro">Nenhuma tarefa criada.</p>
+
+        <div class="alert alert-danger" v-else>{{ mensagemErro }}</div>
 
         <TarefaSalvar
             v-if="exibirFormulario"
@@ -53,7 +55,8 @@ export default {
         return {
             tarefas: [],
             exibirFormulario: false,
-            tarefaSelecionada: undefined
+            tarefaSelecionada: undefined,
+            mensagemErro: undefined
         }
     },
     computed: {
@@ -75,6 +78,24 @@ export default {
             .then((response) => {
                 console.log('GET /tarefas', response)
                 this.tarefas = response.data
+                return 'Axios'
+            }, error => {
+                console.log('Erro capturado no then: ', error)
+                return Promise.reject(error)
+            }).catch(error => {
+                console.log('Erro capturado no catch: ', error)
+                if (error.response) {
+                    this.mensagemErro = `Servidor retornou um erro: ${error.message} ${error.response.statusText}`
+                    console.log('Erro [resposta]: ', error.response)
+                } else if (error.request) {
+                    this.mensagemErro = `Erro ao tentar comunicar com o servidor: ${error.message}`
+                    console.log('Erro [requisição]: ', error.request)
+                } else {
+                    this.mensagemErro = `Erro ao fazer requisição ao servidor: ${error.message}`
+                }
+                return 'Curso VueJS'
+            }).then((algumParametro) => {
+                console.log('Sempre executado!', algumParametro)
             })
     },
     methods: {
